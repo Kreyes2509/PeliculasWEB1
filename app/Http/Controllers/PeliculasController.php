@@ -13,6 +13,13 @@ class PeliculasController extends Controller
 {
     public function addPeliculas(Request $request)
     {
+        $request->validate([
+            'titulo'=>'required',
+            'descripcion'=>'required',
+            'genero'=>'required',
+            'duracion'=>'required',
+            'imagen'=>'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
         $pelicula = new Pelicula();
         $pelicula->titulo = $request->input('titulo');
         $pelicula->descripcion = $request->input('descripcion');
@@ -41,12 +48,18 @@ class PeliculasController extends Controller
 
     public function updatePeliculas(Request $request, $id)
     {
+        $request->validate([
+            'titulo'=>'required',
+            'descripcion'=>'required',
+            'genero'=>'required',
+            'duracion'=>'required',
+            'imagen'=>'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
         $pelicula = Pelicula::find($id);
         $pelicula->titulo = $request->input('titulo');
         $pelicula->descripcion = $request->input('descripcion');
         $pelicula->genero = $request->input('genero');
         $pelicula->duracion = $request->input('duracion');
-        $pelicula->status = $request->input('status');
         if($request->hasFile('image')){
             $file = $request->file('image');
             //dd($file);
